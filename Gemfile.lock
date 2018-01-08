@@ -1,0 +1,36 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    alexa_verifier (1.0.0)
+    byebug (9.1.0)
+    coderay (1.1.2)
+    method_source (0.9.0)
+    mustermann (1.0.1)
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-byebug (3.5.1)
+      byebug (~> 9.1)
+      pry (~> 0.10)
+    rack (2.0.3)
+    rack-protection (2.0.0)
+      rack
+    ralyxa (1.6.0)
+      alexa_verifier (~> 1.0)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
+    tilt (2.0.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  pry-byebug
+  ralyxa
+  sinatra
+
+BUNDLED WITH
+   1.15.3
