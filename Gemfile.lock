@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/dwhenry/ralyxa.git
+  revision: 7cc49c117ad3c31bc2f3003e78aa5fcc2a55a0db
+  branch: add-dialog_handling
+  specs:
+    ralyxa (1.6.0)
+      alexa_verifier (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -15,8 +23,6 @@ GEM
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
-    ralyxa (1.6.0)
-      alexa_verifier (~> 1.0)
     sinatra (2.0.0)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -29,8 +35,11 @@ PLATFORMS
 
 DEPENDENCIES
   pry-byebug
-  ralyxa
+  ralyxa!
   sinatra
+
+RUBY VERSION
+   ruby 2.3.3p222
 
 BUNDLED WITH
    1.15.3

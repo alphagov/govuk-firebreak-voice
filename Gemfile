@@ -6,6 +6,6 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'ralyxa'
+gem 'ralyxa', github: 'dwhenry/ralyxa', branch: 'add-dialog_handling'
 gem 'sinatra'
 gem 'pry-byebug'
