@@ -4,6 +4,10 @@ intent "state_pension_available" do
   ask(JSON.parse(r)['title'])
 end
 
+intent "LaunchRequest" do
+  respond("What can Gov.uk tell you")
+end
+
 intent "SessionEndedRequest" do
   respond
 end
