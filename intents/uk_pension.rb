@@ -1,14 +1,14 @@
 require 'date'
 
 class PensionAge
-  FIELDS = %w{birthday gender}
-
   def initialize(request)
     @request = request
   end
 
   def birthday
-    @request['slots']['birthday']['value']
+    b = @request['slots']['birthday']['value']
+    puts "birthday is: `#{b}` of type #{b.class}"
+    b
   end
 
   def birthday?
