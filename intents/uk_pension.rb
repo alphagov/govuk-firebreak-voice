@@ -23,7 +23,7 @@ class PensionAge
   end
 
   def has_all_fields?
-    gender && birthday?
+    gender && birthday && birthday?
   end
 
   def pending_dialog?
