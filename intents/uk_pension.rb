@@ -2,6 +2,7 @@ require 'date'
 
 class PensionAge
   FIELDS = %w{birthday gender}
+
   def initialize(request)
     @request = request
   end
@@ -15,7 +16,7 @@ class PensionAge
   end
 
   def gender
-    @request['slots']['birthday']['value']
+    @request['slots']['gender']['value']
   end
 
   def valid?
@@ -27,7 +28,7 @@ class PensionAge
   end
 
   def pending_dialog?
-    @request['dialogState'] && @request['dialogState'] != 'COMPLETED'
+    @request['request']['dialogState'] && @request['request']['dialogState'] != 'COMPLETED'
   end
 end
 
