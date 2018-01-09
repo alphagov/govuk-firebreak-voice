@@ -1,10 +1,7 @@
 intent "state_pension_available" do
   birthday = request.slot_value('birthday')
   gender = request.slot_value('gender')
-  puts '*********'
-  puts request.instance_variable_get(:@request)['request']
-  puts '*********'
-  if request.instance_variable_get(:@request)['request']['dialogState'] == 'COMPLETE'
+  if request.instance_variable_get(:@request)['request']['dialogState'] == 'COMPLETED'
     r = `curl https://www.gov.uk/state-pension-age/y/age/#{birthday}/#{gender}.json`
     tell(JSON.parse(r)['title'])
   else
