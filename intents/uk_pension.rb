@@ -6,7 +6,7 @@ class PensionAge
   end
 
   def birthday
-    @request['slots']['birthday']['value']
+    @request['intent']['slots']['birthday']['value']
   end
 
   def birthday?
@@ -14,7 +14,7 @@ class PensionAge
   end
 
   def gender
-    @request['slots']['gender']['value']
+    @request['intent']['slots']['gender']['value']
   end
 
   def valid?
@@ -26,7 +26,7 @@ class PensionAge
   end
 
   def pending_dialog?
-    @request['request']['dialogState'] && @request['request']['dialogState'] != 'COMPLETED'
+    @request['dialogState'] && @request['dialogState'] != 'COMPLETED'
   end
 end
 
