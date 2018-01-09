@@ -1,15 +1,15 @@
 intent "state_pension_available" do
   birthday = request.slot_value('birthday')
   gender = request.slot_value('gender')
-  # if birthday && birthday != '' && gender && gender != ''
-  #   r = `curl https://www.gov.uk/state-pension-age/y/age/#{birthday}/#{gender}.json`
-  #   tell(JSON.parse(r)['title'])
-  # else
+  if request.instance_variable_get(:@request)['request']['confirmationStatus'] == 'COMPLETE'
+    r = `curl https://www.gov.uk/state-pension-age/y/age/#{birthday}/#{gender}.json`
+    tell(JSON.parse(r)['title'])
+  else
     puts '--------'
     puts "No birthday"
     puts '--------'
     dialog_delegate
-  # end
+  end
 end
 
 intent "simple_state_pension" do
