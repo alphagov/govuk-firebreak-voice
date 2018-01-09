@@ -1,8 +1,9 @@
 intent "state_pension_available" do
   birthday = request.slot_value('birthday')
-  if birthday && birthday != ''
+  gender = request.slot_value('gender')
+  if birthday && birthday != '' && gender && gender != ''
     r = `curl https://www.gov.uk/state-pension-age/y/age/#{birthday}/male.json`
-    dialog_delegate(JSON.parse(r)['title'])
+    tell(JSON.parse(r)['title'])
   else
     puts '--------'
     puts "No birthday"
