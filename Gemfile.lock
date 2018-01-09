@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dwhenry/ralyxa.git
-  revision: 7cc49c117ad3c31bc2f3003e78aa5fcc2a55a0db
+  revision: 85a6ab25cbdd830e5fbc170601a835018c732f50
   branch: add-dialog_handling
   specs:
     ralyxa (1.6.0)
@@ -42,4 +42,4 @@ RUBY VERSION
    ruby 2.3.3p222
 
 BUNDLED WITH
-   1.15.3
+   1.16.1
