@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dwhenry/ralyxa.git
-  revision: e2a720ad77493fdce5de1a36b05080ab851ebf38
+  revision: 0b76e18695f610c83b95d41f8e4e34cc0c6b14c5
   branch: add-dialog_handling
   specs:
     ralyxa (1.6.0)
