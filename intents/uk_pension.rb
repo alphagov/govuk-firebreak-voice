@@ -6,9 +6,7 @@ class PensionAge
   end
 
   def birthday
-    b = @request['slots']['birthday']['value']
-    puts "birthday is: `#{b}` of type #{b.class}"
-    b
+    @request['slots']['birthday']['value']
   end
 
   def birthday?
@@ -39,8 +37,10 @@ intent "simple_state_pension" do
     r = `curl https://www.gov.uk/state-pension-age/y/age/#{pension_age.birthday}/#{pension_age.gender}.json`
     tell(JSON.parse(r)['title'])
   elsif pension_age.birthday && !pension_age.birthday?
+    puts "invalid birthday"
     dialog_elicit("Please enter your full birthday including month and year", 'birthday')
   else
+    puts "delegate"
     dialog_delegate
   end
 end
