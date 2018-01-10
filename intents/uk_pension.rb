@@ -46,7 +46,7 @@ intent "simple_state_pension" do
 end
 
 intent "LaunchRequest" do
-  respond("What can Gov.uk tell you")
+  respond("Hi this skill allows you to do one of these things. 1 - When do I get my pension")
 end
 
 intent "SessionEndedRequest" do
@@ -97,11 +97,7 @@ intent "pension_age" do
   session = Session.load_session(request)
   if session.can?(:pension_age)
     session.perform(:add_date, field: :birthday)
-    if session.changes.any?
-      ask(*session.change_details)
-    else
-      ask(*session.ask_details)
-    end
+    ask(*session.ask_details)
   else
     # should this reset the session?
     Responder.new(self).build_action_not_alllowed(session)

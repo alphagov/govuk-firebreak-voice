@@ -19,8 +19,6 @@ class Session
     )
   end
 
-  attr_reader :changes
-
   def initialize(request, last_action:, last_request:, allowed_actions:, birthday: nil, full_date: false)
     @request = request
     @last_action = last_action
@@ -28,8 +26,6 @@ class Session
     @allowed_actions = allowed_actions
     @birthday = birthday
     @full_date = full_date
-
-    @changes = []
   end
 
   def can?(action)
@@ -41,7 +37,6 @@ class Session
     when :add_date
       @birthday = @request.slot_value(field.to_s)
       if @birthday =~ /\A\d\d\d\d-\d\d-\d\d\Z/
-        @changes << :birthday
         @full_date = true
       end
     end
@@ -83,21 +78,21 @@ class Session
     ]
   end
 
-  def change_details
-    question = "You have said that you were"
-    question << " born on #{@birthday}" if @changes.include?(:birthday)
-
-    [
-      question,
-      session_attributes: {
-        last_action: 'confirmation',
-        last_request: question,
-        allowed_actions: %{getConfirmation},
-        birthday: @birthday,
-        full_date: @full_date
-      }
-    ]
-  end
+  # def change_details
+  #   question = "You have said that you were"
+  #   question << " born on #{@birthday}" if @changes.include?(:birthday)
+  #   question << ". is this correct"
+  #   [
+  #     question,
+  #     session_attributes: {
+  #       last_action: 'confirmation',
+  #       last_request: question,
+  #       allowed_actions: %{getConfirmation},
+  #       birthday: @birthday,
+  #       full_date: @full_date
+  #     }
+  #   ]
+  # end
 
   def attributes
     {

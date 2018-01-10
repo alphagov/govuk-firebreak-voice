@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe 'uk_pensions' do
   context 'When no DOB or gender is provided in the question' do
-    let(:json_data) { load_json('when can I get my pension') }
+    let(:json_data) { load_json('without DOB or gender') }
 
     it 'Will ask for your date of birth' do
       post '/alexa', json_data
@@ -27,8 +27,8 @@ RSpec.describe 'uk_pensions' do
     end
   end
 
-  context 'When a DOB but no gender is provided in the question' do
-    let(:json_data) { load_json('I was born on 1 Jan 1987 when will I get my pension') }
+  context 'When a DOB is provided in the question' do
+    let(:json_data) { load_json('with DOB') }
 
     it 'Will ask for your gender' do
       post '/alexa', json_data
@@ -36,16 +36,16 @@ RSpec.describe 'uk_pensions' do
       expect(JSON.parse(last_response.body)).to eq(
         "version" => "1.0",
         "sessionAttributes" => {
-          "last_action" => "confirmation",
-          "last_request" => "You have said that you were born on 1987-01-01",
-          "allowed_actions" => "getConfirmation",
+          "last_action" => "gender",
+          "last_request" => "Are you male or female?",
+          "allowed_actions" => "getGender",
           "birthday"=>'1987-01-01',
           "full_date"=>true
         },
         "response" => {
           "outputSpeech"=>{
             "type" => "PlainText",
-            "text" => "You have said that you were born on 1987-01-01"
+            "text" => "Are you male or female?"
           },
           "shouldEndSession" => false
         }
@@ -53,4 +53,29 @@ RSpec.describe 'uk_pensions' do
     end
   end
 
+  context 'When a partial DOB is provided in the question' do
+    let(:json_data) { load_json('with DOB') }
+
+    it 'Will ask for your gender' do
+      post '/alexa', json_data
+
+      expect(JSON.parse(last_response.body)).to eq(
+        "version" => "1.0",
+        "sessionAttributes" => {
+          "last_action" => "gender",
+          "last_request" => "Are you male or female?",
+          "allowed_actions" => "getGender",
+          "birthday"=>'1987-01-01',
+          "full_date"=>true
+        },
+        "response" => {
+          "outputSpeech"=>{
+            "type" => "PlainText",
+            "text" => "Are you male or female?"
+          },
+          "shouldEndSession" => false
+        }
+      )
+    end
+  end
 end
