@@ -11,7 +11,7 @@ RSpec.describe 'uk_pensions' do
         "version" => "1.0",
         "sessionAttributes" => {
           "last_action" => "birthday",
-          "last_request" => "Ok, what’s your date of birth?",
+          "last_request" => "Ok what’s your date of birth",
           "allowed_actions" => "getDate getNumber",
           "birthday"=>nil,
           "full_date"=>false
@@ -19,7 +19,7 @@ RSpec.describe 'uk_pensions' do
         "response" => {
           "outputSpeech"=>{
             "type" => "PlainText",
-            "text" => "Ok, what’s your date of birth?"
+            "text" => "Ok what’s your date of birth"
           },
           "shouldEndSession" => false
         }
@@ -36,16 +36,16 @@ RSpec.describe 'uk_pensions' do
       expect(JSON.parse(last_response.body)).to eq(
         "version" => "1.0",
         "sessionAttributes" => {
-          "last_action" => "gender",
-          "last_request" => "Are you male or female?",
-          "allowed_actions" => "getGender",
+          "last_action" => "confirmation",
+          "last_request" => "You have said that you were born on 1987-01-01",
+          "allowed_actions" => "getConfirmation",
           "birthday"=>'1987-01-01',
           "full_date"=>true
         },
         "response" => {
           "outputSpeech"=>{
             "type" => "PlainText",
-            "text" => "Are you male or female?"
+            "text" => "You have said that you were born on 1987-01-01"
           },
           "shouldEndSession" => false
         }

@@ -39,9 +39,9 @@ class Session
   def perform(action, field:)
     case action
     when :add_date
-      @changes << 'birthday'
       @birthday = @request.slot_value(field.to_s)
       if @birthday =~ /\A\d\d\d\d-\d\d-\d\d\Z/
+        @changes << :birthday
         @full_date = true
       end
     end
@@ -64,7 +64,7 @@ class Session
   def ask_details
     case next_action
     when :birthday
-      question = "Ok, what’s your date of birth?"
+      question = "Ok what’s your date of birth"
       allowed_actions = %(getDate getNumber)
     when :gender
       question = "Are you male or female?"
@@ -84,9 +84,19 @@ class Session
   end
 
   def change_details
-    question = "Ok, what’s your date of birth?"
-    allowed_actions = %(getDate getNumber)
+    question = "You have said that you were"
+    question << " born on #{@birthday}" if @changes.include?(:birthday)
 
+    [
+      question,
+      session_attributes: {
+        last_action: 'confirmation',
+        last_request: question,
+        allowed_actions: %{getConfirmation},
+        birthday: @birthday,
+        full_date: @full_date
+      }
+    ]
   end
 
   def attributes
