@@ -97,8 +97,8 @@ intent "pension_age" do
   session = Session.load_session(request)
   if session.can?(:pension_age)
     session.perform(:add_date, field: :birthday)
-    if session.complete?
-      tell(*session.ask_details)
+    if session.changes.any?
+      ask(*session.change_details)
     else
       ask(*session.ask_details)
     end
