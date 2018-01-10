@@ -94,54 +94,16 @@ intent "getConfirmation" do
 end
 
 intent "pension_age" do
-  session = load_session(request)
-  session.perform(:add_date, field: :birthday)
-  build_ask_action(session)
-end
-
-def load_session(request)
-  Session.new(
-    last_request: request.session_attributes('last_request'),
-    allowed_actions: request.session_attributes('allowed_actions'),
-  )
-end
-
-def build_ask_action(session)
-  if session.complete?
-    ask(*session.ask_details)
-  else
-    build_answer(session)
-  end
-end
-
-class Session
-  def initialize(last_request:, allowed_actions:)
-    @last_request = last_request
-    @allowed_actions = allowed_actions
-  end
-
-  def complete?
-    false # TODO: add this
-  end
-
-  def next_action
-    :birthday # TODO: calc this
-  end
-
-  def ask_details
-    case next_action
-    when :birthday
-      question = "Ok, what’s your date of birth?"
-      allowed_actions = %(getDate getNumber)
+  session = Session.load_session(request)
+  if session.can?(:pension_age)
+    session.perform(:add_date, field: :birthday)
+    if session.complete?
+      tell(*session.ask_details)
+    else
+      ask(*session.ask_details)
     end
-
-    [question, session_attributes: { last_request: question, allowed_actions: allowed_actions }]
-  end
-
-  def attributes
-    {
-      last_request: @last_request,
-      allowed_actions: @allowed_actions
-    }
+  else
+    # should this reset the session?
+    Responder.new(self).build_action_not_alllowed(session)
   end
 end

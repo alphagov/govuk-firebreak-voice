@@ -9,3 +9,5 @@ end
 gem 'ralyxa', github: 'dwhenry/ralyxa', branch: 'add-dialog_handling'
 gem 'sinatra'
 gem 'pry-byebug'
+gem 'rspec'
+gem 'rack-test'
