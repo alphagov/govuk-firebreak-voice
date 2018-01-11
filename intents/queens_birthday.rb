@@ -3,7 +3,7 @@ require 'date'
 intent 'queens_birthday' do
   official_date = Date.new(Date.today.year, 6, 1)
 
-  while official_date.wday != 5
+  while official_date.wday != 6
     official_date += 1 # find the first saturday
   end
   official_date += 7 # second saturday
