@@ -36,14 +36,14 @@ RSpec.describe 'uk_pensions' do
         "version" => "1.0",
         "sessionAttributes" => {
           "last_action" => "confirm_details",
-          "last_request" => "Because you were born on  You’ll reach State Pension age on  1 June 2055.",
+          "last_request" => "Because you were born on 1987-06-01 You’ll reach State Pension age on  1 June 2055.",
           "allowed_actions" => "pension_age",
           "birthday"=>'1987-06-01',
         },
         "response" => {
           "outputSpeech"=>{
             "type" => "PlainText",
-            "text" => "Because you were born on  You’ll reach State Pension age on  1 June 2055."
+            "text" => "Because you were born on 1987-06-01 You’ll reach State Pension age on  1 June 2055."
           },
           "shouldEndSession" => false
         }
@@ -73,6 +73,31 @@ RSpec.describe 'uk_pensions' do
           "shouldEndSession" => false
         }
       )
+    end
+
+    context 'Add year to partial date' do
+      let(:json_data) { load_json('add year to existing date') }
+
+      it "will update the date with a year" do
+        post '/alexa', json_data
+
+        expect(JSON.parse(last_response.body)).to eq(
+          "version" => "1.0",
+          "sessionAttributes" => {
+            "last_action" => "confirm_details",
+            "last_request" => "Because you were born on 1976-09-01 You’ll reach State Pension age on  1 September 2043.",
+            "allowed_actions" => "pension_age",
+            "birthday"=>'1976-09-01',
+          },
+          "response" => {
+            "outputSpeech"=>{
+              "type" => "PlainText",
+              "text" => "Because you were born on 1976-09-01 You’ll reach State Pension age on  1 September 2043."
+            },
+            "shouldEndSession" => false
+          }
+        )
+      end
     end
   end
 end

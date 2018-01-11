@@ -8,10 +8,13 @@ Ralyxa.configure do |c|
 end
 
 post '/alexa' do
-  puts '------'
-  puts request.body.read
-  puts '------'
-  request.body.rewind
+  unless ENV['RACK_ENV'] == 'test'
+    puts '------'
+    puts request.body.read
+    puts '------'
+    request.body.rewind
+  end
+
   Ralyxa::Skill.handle(request)
 end
 

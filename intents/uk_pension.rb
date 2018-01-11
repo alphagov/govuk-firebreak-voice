@@ -55,23 +55,21 @@ end
 
 
 intent "getDate" do
-  session = load_session(request)
-  if session.can?(:get_date)
-    session.perform(:add_date, field: :date)
-    if session.valid?
-      confirm_action(session)
-    else
-      build_reask_action(session)
-    end
+  session = Session.load_session(request)
+  if session.can?(:getDate)
+    session.add_date(field: :date)
+    question, args = session.ask_details
+
+    ask(question, args)
   else
-    build_action_not_alllowed(session)
+    Responder.new(self).build_action_not_alllowed(session)
   end
 end
 
 intent "getNumber" do
   session = Session.load_session(request)
   if session.can?(:get_number)
-    session.perform(:add_number, field: :number)
+    session.add_number(field: :number)
     if session.ready_for_confirmation?
       build_confirm_action(session)
     else
@@ -96,7 +94,7 @@ end
 intent "pension_age" do
   session = Session.load_session(request)
   if session.can?(:pension_age)
-    session.perform(:add_date, field: :birthday)
+    session.add_date(field: :birthday)
     question, args = session.ask_details
 
     ask(question, args)

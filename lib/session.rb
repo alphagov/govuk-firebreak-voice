@@ -34,12 +34,22 @@ class Session
     @allowed_actions.include?(action.to_s)
   end
 
-  def perform(action, field:)
-    case action
-    when :add_date
-      @birthday = @request.slot_value(field.to_s)
-      if @birthday && Date.parse(@birthday) > Date.today
-        @next_action = :birthday_missing_year
+  def add_date(field:)
+    date = @request.slot_value(field.to_s)
+    if date
+      if date =~ /\A\d\d\d\d-\d\d-\d\d\Z/
+        @birthday = date
+        if Date.parse(date) > Date.today
+          @next_action = :birthday_missing_year
+        end
+      elsif date =~ /\A(19|20)\d\d\Z/
+        if @birthday
+          @birthday.gsub!(/\A\d\d\d\d/, date)
+        else
+          @birthday = "#{date}-00-00"
+        end
+      else
+        raise "Unknown date format `#{date}`"
       end
     end
   end
@@ -80,7 +90,7 @@ class Session
     when :confirm_details
       r = open("https://www.gov.uk/state-pension-age/y/age/#{@birthday}/#{@gender || 'male'}.json").read
 
-      question = "Because you were born on #{@birday} #{JSON.parse(r)['title']}"
+      question = "Because you were born on #{@birthday} #{JSON.parse(r)['title']}"
       allowed_actions = %{pension_age}
         #you can claim your pension on
         #¢DD/MM/YYYY and you will be YY years old."
