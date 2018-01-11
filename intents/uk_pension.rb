@@ -69,7 +69,7 @@ intent "getDate" do
 end
 
 intent "getNumber" do
-  session = load_session(request)
+  session = Session.load_session(request)
   if session.can?(:get_number)
     session.perform(:add_number, field: :number)
     if session.ready_for_confirmation?
@@ -97,7 +97,9 @@ intent "pension_age" do
   session = Session.load_session(request)
   if session.can?(:pension_age)
     session.perform(:add_date, field: :birthday)
-    ask(*session.ask_details)
+    question, args = session.ask_details
+
+    ask(question, args)
   else
     # should this reset the session?
     Responder.new(self).build_action_not_alllowed(session)

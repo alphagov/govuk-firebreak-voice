@@ -14,7 +14,6 @@ RSpec.describe 'uk_pensions' do
           "last_request" => "Ok what’s your date of birth",
           "allowed_actions" => "getDate getNumber",
           "birthday"=>nil,
-          "full_date"=>false
         },
         "response" => {
           "outputSpeech"=>{
@@ -36,16 +35,15 @@ RSpec.describe 'uk_pensions' do
       expect(JSON.parse(last_response.body)).to eq(
         "version" => "1.0",
         "sessionAttributes" => {
-          "last_action" => "gender",
-          "last_request" => "Are you male or female?",
-          "allowed_actions" => "getGender",
-          "birthday"=>'1987-01-01',
-          "full_date"=>true
+          "last_action" => "confirm_details",
+          "last_request" => "Because you were born on  You’ll reach State Pension age on  1 June 2055.",
+          "allowed_actions" => "pension_age",
+          "birthday"=>'1987-06-01',
         },
         "response" => {
           "outputSpeech"=>{
             "type" => "PlainText",
-            "text" => "Are you male or female?"
+            "text" => "Because you were born on  You’ll reach State Pension age on  1 June 2055."
           },
           "shouldEndSession" => false
         }
@@ -54,7 +52,7 @@ RSpec.describe 'uk_pensions' do
   end
 
   context 'When a partial DOB is provided in the question' do
-    let(:json_data) { load_json('with DOB') }
+    let(:json_data) { load_json('with partial DOB - no year') }
 
     it 'Will ask for your gender' do
       post '/alexa', json_data
@@ -62,16 +60,15 @@ RSpec.describe 'uk_pensions' do
       expect(JSON.parse(last_response.body)).to eq(
         "version" => "1.0",
         "sessionAttributes" => {
-          "last_action" => "gender",
-          "last_request" => "Are you male or female?",
-          "allowed_actions" => "getGender",
-          "birthday"=>'1987-01-01',
-          "full_date"=>true
+          "last_action" => "birthday_missing_year",
+          "last_request" => "Sorry, I need to know the year. What year were you born",
+          "allowed_actions" => "getDate getNumber",
+          "birthday"=>'2019-01-01',
         },
         "response" => {
           "outputSpeech"=>{
             "type" => "PlainText",
-            "text" => "Are you male or female?"
+            "text" => "Sorry, I need to know the year. What year were you born"
           },
           "shouldEndSession" => false
         }
