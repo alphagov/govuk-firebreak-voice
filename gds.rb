@@ -8,10 +8,10 @@ Ralyxa.configure do |c|
 end
 
 post '/alexa' do
-  # puts '------'
-  # puts request.body.read
-  # puts '------'
-  # request.body.rewind
+  puts '------'
+  puts request.body.read
+  puts '------'
+  request.body.rewind
   Ralyxa::Skill.handle(request)
 end
 
