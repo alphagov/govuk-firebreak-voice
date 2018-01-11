@@ -61,7 +61,7 @@ class Session
   def next_action
     if !@birthday
       :birthday
-    elsif Date.parse(@birthday) < Date.new(1963) && !@gender
+    elsif Date.parse(@birthday) < Date.new(1963)
       :gender
     else
       if @birthday == 1111
