@@ -2,7 +2,7 @@ intent 'website_item' do
   item = request.slot_value('websiteItem')
   msg = <<~MSG
     Sorry I don’t know the answer to that. You can find out about #{item} 
-    on the guv dot UK website. I’ve added the link to a card in your Alexa app
+    on the <phoneme alphabet=\"ipa\" ph=\"ˈɡʌv\">gov</phoneme> dot UK website. I’ve added the link to a card in your Alexa app
     Would you like to know anything else
   MSG
 
