@@ -94,9 +94,9 @@ class Session
       allowed_actions = %(getDate)
     when :gender
       question = <<~MSG
-        I can't process people born before 6th December 1953, please use
-        <speak><phoneme alphabet=\"ipa\" ph=\"ˈɡʌv\">gov</phoneme> dot uk</speak> to
-        get your pension date
+        <speak>I can't process people born before 6th December 1953, please use
+        <phoneme alphabet=\"ipa\" ph=\"ˈɡʌv\">gov</phoneme> dot uk to
+        get your pension date</speak>
       MSG
       allowed_actions = %(pension_age)
       ssml = true
