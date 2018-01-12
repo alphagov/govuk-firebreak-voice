@@ -128,12 +128,24 @@
         "name": "pension_age",
         "samples": [
           "I was born on {birthday} when can I get my pension",
-          "when can I get my pension"
+          "when I will reach state pension age",
+          "when can I retire",
+          "when can I retire if I was born on {birthday}",
+          "when can I get my pension",
+          "when can I get my pension if I was born on {birthday}",
+          "when can I get my state pension",
+          "when can I get my state pension if I was born on {birthday}",
+          "I am {age} when can I get my pension",
+          "I'm {age} when can I get my pension"
         ],
         "slots": [
           {
             "name": "birthday",
             "type": "AMAZON.DATE"
+          },
+          {
+            "name": "age",
+            "type": "AMAZON.NUMBER"
           }
         ]
       },
