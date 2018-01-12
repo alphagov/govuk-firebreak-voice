@@ -68,7 +68,13 @@ intent 'list_commands' do
       Can I claim Universal credit.
   MSG
   )
+end
 
+intent 'why_dob' do
+  session = load_session(request)
+
+  question, args = session.dup_previous_details
+  respond("I need this information in order to correctly determine when you can get your pension. #{question}", args)
 end
 
 intent "SessionEndedRequest" do
