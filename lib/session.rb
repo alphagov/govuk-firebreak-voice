@@ -112,7 +112,7 @@ class Session
       reset = true
 
     when :want_exact_date
-      r = open("https://www.gov.uk/state-pension-age/y/age/#{@birthday}/#{@gender || 'male'}.json").read
+      r = open("https://www.gov.uk/state-pension-age/y/age/#{@birthday}-01-01/#{@gender || 'male'}.json").read
       year = JSON.parse(r)['title'].match(/\d\d\d\d/)[0]
       age = year.to_i - @birthday.to_i
       question =  <<~MSG
