@@ -54,8 +54,6 @@ class Session
         else
           @birthday = date
         end
-      else
-        raise "Unknown date format `#{date}`"
       end
     end
   end
