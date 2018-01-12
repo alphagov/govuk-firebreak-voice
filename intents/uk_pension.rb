@@ -51,9 +51,9 @@ intent "LaunchRequest" do
       Hi this skill allows you to ask, 
       When do I get my pension,
       When is the queens birthday,
-      Who is the minister for the cabinet office and
+      Who is the minister for the cabinet office or
       Can I claim Universal credit.
-      Please say list commands to here these options again.
+      Please say list options to here this again.
     MSG
   )
 end
