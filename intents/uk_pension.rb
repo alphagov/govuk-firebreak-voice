@@ -46,7 +46,29 @@ intent "simple_state_pension" do
 end
 
 intent "LaunchRequest" do
-  respond("Hi this skill allows you to do one of these things. 1 - When do I get my pension")
+  respond(
+    <<~MSG
+      Hi this skill allows you to ask, 
+      When do I get my pension,
+      When is the queens birthday,
+      Who is the minister for the cabinet office and
+      Can I claim Universal credit.
+      Please say list commands to here these options again.
+    MSG
+  )
+end
+
+intent 'list_commands' do
+  respond(
+    <<~MSG
+      Hi this skill allows you to ask, 
+      When do I get my pension,
+      When is the queens birthday,
+      Who is the minister for the cabinet office and
+      Can I claim Universal credit.
+  MSG
+  )
+
 end
 
 intent "SessionEndedRequest" do

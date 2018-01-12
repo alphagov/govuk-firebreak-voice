@@ -16,9 +16,11 @@ intent 'queens_birthday' do
                when 3; 'rd'
                else 'th'
                end
-  tell(<<~MSG
-      The Queen’s birthday is on the 21st of April. She also has an official birthday 
-      and public celebration in June. This year it #{will_be_was} on #{official_date.strftime("%A the %-d#{ordinality} of %B")}.
-    MSG
-  )
+  msg = <<~MSG
+    The Queen’s birthday is on the 21st of April. She also has an official birthday 
+    and public celebration in June. This year it #{will_be_was} on 
+    #{official_date.strftime("%A the %-d#{ordinality} of %B")}.
+  MSG
+
+  ask(msg)
 end
