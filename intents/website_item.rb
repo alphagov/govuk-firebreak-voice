@@ -8,5 +8,5 @@ intent 'website_item' do
 
   card = card(item, "Find out more details at https://www.gov.uk/#{item.downcase.tr(' ', '-')}", "https://assets.publishing.service.gov.uk/static/images/gov.uk_logotype_crown.png")
 
-  ask(msg, card: card)
+  ask(msg, card: card, ssml: true)
 end
