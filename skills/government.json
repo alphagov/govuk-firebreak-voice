@@ -44,7 +44,7 @@
         ]
       },
       {
-        "name": "WEBSIT_ITEMS",
+        "name": "WEBSITE_ITEMS",
         "values": [
           {
             "id": null,
@@ -74,6 +74,10 @@
       },
       {
         "name": "AMAZON.StopIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.YesIntent",
         "samples": []
       },
       {
@@ -117,30 +121,6 @@
         "slots": []
       },
       {
-        "name": "simple_state_pension",
-        "samples": [
-          "State pension what I am {gender} born on {birthday}",
-          "state pension for {gender} born {birthday}",
-          "state pension for {gender}"
-        ],
-        "slots": [
-          {
-            "name": "birthday",
-            "type": "AMAZON.DATE",
-            "samples": [
-              "{birthday}"
-            ]
-          },
-          {
-            "name": "gender",
-            "type": "GENDERS",
-            "samples": [
-              "{gender}"
-            ]
-          }
-        ]
-      },
-      {
         "name": "website_item",
         "samples": [
           "How do you claim {websiteItem}",
@@ -159,80 +139,48 @@
         "slots": [
           {
             "name": "websiteItem",
-            "type": "WEBSIT_ITEMS"
+            "type": "WEBSITE_ITEMS"
+          }
+        ]
+      },
+      {
+        "name": "getDate",
+        "samples": [
+          "{date}"
+        ],
+        "slots": [
+          {
+            "name": "date",
+            "type": "AMAZON.DATE"
+          }
+        ]
+      },
+      {
+        "name": "getNumber",
+        "samples": [
+          "{number}"
+        ],
+        "slots": [
+          {
+            "name": "number",
+            "type": "AMAZON.NUMBER"
+          }
+        ]
+      },
+      {
+        "name": "pension_age",
+        "samples": [
+          "I was born on {birthday} when can I get my pension",
+          "when can I get my pension"
+        ],
+        "slots": [
+          {
+            "name": "birthday",
+            "type": "AMAZON.DATE"
           }
         ]
       }
     ],
     "invocationName": "government"
-  },
-  "prompts": [
-    {
-      "id": "Elicit.Intent-simple_state_pension.IntentSlot-birthday",
-      "variations": [
-        {
-          "type": "PlainText",
-          "value": "What is your date of birth?"
-        }
-      ]
-    },
-    {
-      "id": "Confirm.Intent-simple_state_pension.IntentSlot-birthday",
-      "variations": [
-        {
-          "type": "PlainText",
-          "value": "your birthday is {birthday}"
-        }
-      ]
-    },
-    {
-      "id": "Elicit.Intent-simple_state_pension.IntentSlot-gender",
-      "variations": [
-        {
-          "type": "PlainText",
-          "value": "What is your gender?"
-        }
-      ]
-    },
-    {
-      "id": "Confirm.Intent-simple_state_pension.IntentSlot-gender",
-      "variations": [
-        {
-          "type": "PlainText",
-          "value": "Your gender is {gender}"
-        }
-      ]
-    }
-  ],
-  "dialog": {
-    "intents": [
-      {
-        "name": "simple_state_pension",
-        "confirmationRequired": false,
-        "prompts": {},
-        "slots": [
-          {
-            "name": "birthday",
-            "type": "AMAZON.DATE",
-            "elicitationRequired": true,
-            "confirmationRequired": true,
-            "prompts": {
-              "elicitation": "Elicit.Intent-simple_state_pension.IntentSlot-birthday",
-              "confirmation": "Confirm.Intent-simple_state_pension.IntentSlot-birthday"
-            }
-          },
-          {
-            "name": "gender",
-            "type": "GENDERS",
-            "elicitationRequired": true,
-            "confirmationRequired": true,
-            "prompts": {
-              "elicitation": "Elicit.Intent-simple_state_pension.IntentSlot-gender",
-              "confirmation": "Confirm.Intent-simple_state_pension.IntentSlot-gender"
-            }
-          }
-        ]
-      }
-    ]
   }
 }

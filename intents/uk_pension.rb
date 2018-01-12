@@ -61,10 +61,10 @@ end
 intent 'list_commands' do
   respond(
     <<~MSG
-      Hi this skill allows you to ask, 
+      Please try 
       When do I get my pension,
       When is the queens birthday,
-      Who is the minister for the cabinet office and
+      Who is the minister for the cabinet office or
       Can I claim Universal credit.
   MSG
   )
@@ -84,7 +84,7 @@ intent "YesIntent" do
     ask(question, args)
   else
     question, args = session.dup_previous_details
-    response("I'm sorry that is not a valid response. #{question}", args)
+    respond("I'm sorry that is not a valid response. #{question}", args)
   end
 end
 
@@ -97,7 +97,7 @@ intent "getDate" do
     ask(question, args)
   else
     question, args = session.dup_previous_details
-    response("I'm sorry that is not a valid response. #{question}", args)
+    respond("I'm sorry that is not a valid response. #{question}", args)
   end
 end
 
@@ -112,18 +112,7 @@ intent "getNumber" do
     end
   else
     question, args = session.dup_previous_details
-    response("I'm sorry that is not a valid response. #{question}", args)
-  end
-end
-
-intent "getConfirmation" do
-  session = load_session(request)
-  if session.can?(:get_confirmation)
-    session.perform(:get_confirmation, field: :confirmation)
-
-    build_ask_action(session)
-  else
-    build_action_not_alllowed(session)
+    respond("I'm sorry that is not a valid response. #{question}", args)
   end
 end
 
@@ -137,6 +126,6 @@ intent "pension_age" do
   else
     # should this reset the session?
     question, args = session.dup_previous_details
-    response("I'm sorry that is not a valid response. #{question}", args)
+    respond("I'm sorry that is not a valid response. #{question}", args)
   end
 end

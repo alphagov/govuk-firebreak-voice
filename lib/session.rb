@@ -102,8 +102,10 @@ class Session
       ssml = true
     when :confirm_details
       r = open("https://www.gov.uk/state-pension-age/y/age/#{@birthday}/#{@gender || 'male'}.json").read
+      year = JSON.parse(r)['title'].match(/\d\d\d\d/)[0]
+      age = year.to_i - @birthday.to_i
 
-      question = "Because you were born on #{@birthday} #{JSON.parse(r)['title']}"
+      question = "Because you were born on #{@birthday} #{JSON.parse(r)['title']} and you will be #{age} years old"
       allowed_actions = %{pension_age}
         #you can claim your pension on
         #¢DD/MM/YYYY and you will be YY years old."
