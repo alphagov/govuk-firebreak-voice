@@ -100,4 +100,34 @@ RSpec.describe 'uk_pensions' do
       end
     end
   end
+
+  context 'pre 1953 birthday' do
+    let(:json_data) { load_json('pre 1953 birthday') }
+
+    it "will say it can't handle the request" do
+      post '/alexa', json_data
+
+      msg = <<~SSML
+        I can't process people born before 6th December 1953, please use
+        <speak><phoneme alphabet=\"ipa\" ph=\"ˈɡʌv\">gov</phoneme> dot uk</speak> to
+        get your pension date
+      SSML
+      expect(JSON.parse(last_response.body)).to eq(
+        "version" => "1.0",
+        "sessionAttributes" => {
+          "last_action" => "gender",
+          "last_request" => msg,
+          "allowed_actions" => "pension_age",
+          "birthday"=>'1934',
+        },
+        "response" => {
+          "outputSpeech"=>{
+            "type" => "SSML",
+            "ssml"=> msg
+          },
+          "shouldEndSession" => false
+        }
+      )
+    end
+  end
 end

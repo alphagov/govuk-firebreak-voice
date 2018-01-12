@@ -93,9 +93,11 @@ class Session
       question = "What day were you born?"
       allowed_actions = %(getDate)
     when :gender
-      question = "I can't process people born before 6th December 1953, please use
-  <speak><phoneme alphabet=\"ipa\" ph=\"ˈɡʌv\">gov</phoneme> dot uk</speak> to
-  get your pension date"
+      question = <<~MSG
+        I can't process people born before 6th December 1953, please use
+        <speak><phoneme alphabet=\"ipa\" ph=\"ˈɡʌv\">gov</phoneme> dot uk</speak> to
+        get your pension date
+      MSG
       allowed_actions = %(pension_age)
       ssml = true
     when :confirm_details
