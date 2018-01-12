@@ -81,6 +81,30 @@
         "samples": []
       },
       {
+        "name": "getDate",
+        "samples": [
+          "{date}"
+        ],
+        "slots": [
+          {
+            "name": "date",
+            "type": "AMAZON.DATE"
+          }
+        ]
+      },
+      {
+        "name": "getNumber",
+        "samples": [
+          "{number}"
+        ],
+        "slots": [
+          {
+            "name": "number",
+            "type": "AMAZON.NUMBER"
+          }
+        ]
+      },
+      {
         "name": "list_commands",
         "samples": [
           "List commands",
@@ -99,6 +123,19 @@
           "Who's the new minister for Cabinet Office"
         ],
         "slots": []
+      },
+      {
+        "name": "pension_age",
+        "samples": [
+          "I was born on {birthday} when can I get my pension",
+          "when can I get my pension"
+        ],
+        "slots": [
+          {
+            "name": "birthday",
+            "type": "AMAZON.DATE"
+          }
+        ]
       },
       {
         "name": "queens_birthday",
@@ -144,41 +181,13 @@
         ]
       },
       {
-        "name": "getDate",
+        "name": "why_dob",
         "samples": [
-          "{date}"
+          "Why do you need to know",
+          "why do you need to know this",
+          "why do you need this"
         ],
-        "slots": [
-          {
-            "name": "date",
-            "type": "AMAZON.DATE"
-          }
-        ]
-      },
-      {
-        "name": "getNumber",
-        "samples": [
-          "{number}"
-        ],
-        "slots": [
-          {
-            "name": "number",
-            "type": "AMAZON.NUMBER"
-          }
-        ]
-      },
-      {
-        "name": "pension_age",
-        "samples": [
-          "I was born on {birthday} when can I get my pension",
-          "when can I get my pension"
-        ],
-        "slots": [
-          {
-            "name": "birthday",
-            "type": "AMAZON.DATE"
-          }
-        ]
+        "slots": []
       }
     ],
     "invocationName": "government"
