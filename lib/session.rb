@@ -116,7 +116,7 @@ class Session
       year = JSON.parse(r)['title'].match(/\d\d\d\d/)[0]
       age = year.to_i - @birthday.to_i
       question =  <<~MSG
-        Because you were born on #{@birthday} you can claim your pension on #{year} and you will be #{age} years old. 
+        Because you were born on #{@birthday} you can claim your pension in #{year} and you will be #{age} years old. 
         Would you like to know the exact date?
       MSG
       allowed_actions = %{YesIntent pension_age}

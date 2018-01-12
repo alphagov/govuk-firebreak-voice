@@ -81,7 +81,7 @@ intent "SessionEndedRequest" do
   respond
 end
 
-intent "YesIntent" do
+intent "AMAZON.YesIntent" do
   session = load_session(request)
   if session.can?(:YesIntent)
     session.confirm_intent
