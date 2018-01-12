@@ -71,7 +71,7 @@ intent 'list_commands' do
 end
 
 intent 'why_dob' do
-  session = load_session(request)
+  session = Session.load_session(request)
 
   question, args = session.dup_previous_details
   respond("I need this information in order to correctly determine when you can get your pension. #{question}", args)
@@ -82,7 +82,7 @@ intent "SessionEndedRequest" do
 end
 
 intent "AMAZON.YesIntent" do
-  session = load_session(request)
+  session = Session.load_session(request)
   if session.can?(:YesIntent)
     session.confirm_intent
     question, args = session.ask_details
