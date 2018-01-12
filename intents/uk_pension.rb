@@ -109,13 +109,11 @@ end
 
 intent "getNumber" do
   session = Session.load_session(request)
-  if session.can?(:get_number)
-    session.add_number(field: :number)
-    if session.ready_for_confirmation?
-      build_confirm_action(session)
-    else
-      build_ask_action(session)
-    end
+  if session.can?(:getNumber)
+    session.add_date(field: :number)
+    question, args = session.ask_details
+
+    ask(question, args)
   else
     question, args = session.dup_previous_details
     respond("I'm sorry that is not a valid response. #{question}", args)
