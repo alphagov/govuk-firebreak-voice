@@ -75,6 +75,18 @@ intent "SessionEndedRequest" do
   respond
 end
 
+intent "YesIntent" do
+  session = load_session(request)
+  if session.can?(:YesIntent)
+    session.confirm_intent
+    question, args = session.ask_details
+
+    ask(question, args)
+  else
+    question, args = session.dup_previous_details
+    response("I'm sorry that is not a valid response. #{question}", args)
+  end
+end
 
 intent "getDate" do
   session = Session.load_session(request)
@@ -84,7 +96,8 @@ intent "getDate" do
 
     ask(question, args)
   else
-    Responder.new(self).build_action_not_alllowed(session)
+    question, args = session.dup_previous_details
+    response("I'm sorry that is not a valid response. #{question}", args)
   end
 end
 
@@ -98,7 +111,8 @@ intent "getNumber" do
       build_ask_action(session)
     end
   else
-    build_action_not_alllowed(session)
+    question, args = session.dup_previous_details
+    response("I'm sorry that is not a valid response. #{question}", args)
   end
 end
 
@@ -122,6 +136,7 @@ intent "pension_age" do
     ask(question, args)
   else
     # should this reset the session?
-    Responder.new(self).build_action_not_alllowed(session)
+    question, args = session.dup_previous_details
+    response("I'm sorry that is not a valid response. #{question}", args)
   end
 end

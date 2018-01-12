@@ -38,15 +38,21 @@ class Session
     date = @request.slot_value(field.to_s)
     if date
       if date =~ /\A\d\d\d\d-\d\d-\d\d\Z/
-        @birthday = date
         if Date.parse(date) > Date.today
-          @next_action = :birthday_missing_year
+          if @birthday =~ /\A\d\d\d\d\Z/
+            @birthday = date.gsub(/\A\d\d\d\d/, @birthday)
+          else
+            @birthday = date
+            @next_action = :birthday_missing_year
+          end
+        else
+          @birthday = date
         end
       elsif date =~ /\A(19|20)\d\d\Z/
         if @birthday
           @birthday.gsub!(/\A\d\d\d\d/, date)
         else
-          @birthday = "#{date}-00-00"
+          @birthday = date
         end
       else
         raise "Unknown date format `#{date}`"
@@ -61,11 +67,13 @@ class Session
   def next_action
     if !@birthday
       :birthday
-    elsif Date.parse(@birthday) < Date.new(1963)
+    elsif @birthday =~ /\A\d\d\d\d\Z/ && @birthday.to_i <= 1953
+      :gender
+    elsif @birthday !~ /\A\d\d\d\d\Z/ && Date.parse(@birthday) < Date.new(1953, 12, 6)
       :gender
     else
-      if @birthday == 1111
-        :complete_birthday
+      if @birthday =~ /\A\d\d\d\d\Z/
+        :want_exact_date
       else
         :confirm_details
       end
@@ -81,8 +89,11 @@ class Session
     when :birthday_missing_year
       question = "Sorry, I need to know the year. What year were you born"
       allowed_actions = %(getDate getNumber)
+    when :birthday_missing_day
+      question = "What day were you born?"
+      allowed_actions = %(getDate)
     when :gender
-      question = "I can't process people born before 1963, please use
+      question = "I can't process people born before 6th December 1953, please use
   <speak><phoneme alphabet=\"ipa\" ph=\"ˈɡʌv\">gov</phoneme> dot uk</speak> to
   get your pension date"
       allowed_actions = %(pension_age)
@@ -94,6 +105,12 @@ class Session
       allowed_actions = %{pension_age}
         #you can claim your pension on
         #¢DD/MM/YYYY and you will be YY years old."
+    when :want_exact_date
+      question =  <<~MSG
+        Because you were born on #{@birthday} you can claim your pension on YYYY and you will be YY years old. 
+        Would you like to know the exact date?
+      MSG
+      allowed_actions = %{YesIntent pension_age}
     else
       raise "Missing action: #{@next_action || next_action}"
     end
@@ -108,10 +125,30 @@ class Session
     }
 
     args[:ssml] = true if ssml
-    [
-      question,
-      args
-    ]
+    [question, args]
+  end
+
+  def dup_previous_details
+    args = {
+      session_attributes: {
+        last_action: @last_action,
+        last_request: @last_request,
+        allowed_actions: @allowed_actions,
+        birthday: @birthday,
+      }
+    }
+    args[:ssml] = true if @last_request =~ /<speak>/
+
+    [@last_request, args]
+  end
+
+  def confirm_intent
+    case @last_action
+    when 'want_exact_date'
+      @next_action = :birthday_missing_day
+    else
+      raise "Unable to confirm intent for: #{@last_action}"
+    end
   end
 
   # def change_details
