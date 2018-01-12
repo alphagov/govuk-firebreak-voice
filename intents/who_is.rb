@@ -5,5 +5,5 @@ intent 'minister_for_cabinet_office' do
   title = Nokogiri.parse(html).css('.current-role-holder h1').first.text.strip
   title.gsub!(/^Current role holder: /, '')
 
-  ask("#{title} is the minister for Cabinet Office")
+  ask("#{title} is the minister for Cabinet Office. Would you like to know anything else")
 end

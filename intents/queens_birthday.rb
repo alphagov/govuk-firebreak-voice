@@ -17,9 +17,10 @@ intent 'queens_birthday' do
                else 'th'
                end
   msg = <<~MSG
-    The Queen’s birthday is on the 21st of April. She also has an official birthday 
-    and public celebration in June. This year it #{will_be_was} on 
-    #{official_date.strftime("%A the %-d#{ordinality} of %B")}.
+    The queen has 2 birthdays. Her actual birthday is the 21st of April. 
+    She also has an official birthday and public celebration in June. 
+    This year it #{will_be_was} on #{official_date.strftime("%A the %-d#{ordinality} of %B")}. 
+    Would you like to know anything else
   MSG
 
   ask(msg)
