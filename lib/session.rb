@@ -82,6 +82,8 @@ class Session
 
   def ask_details
     ssml = false
+    reset = false
+
     case @next_action || next_action
     when :birthday
       question = "Ok what’s your date of birth"
@@ -98,8 +100,8 @@ class Session
         <phoneme alphabet=\"ipa\" ph=\"ˈɡʌv\">gov</phoneme> dot uk to
         get your pension date</speak>
       MSG
-      allowed_actions = %(pension_age)
-      ssml = true
+
+      reset = true
     when :confirm_details
       r = open("https://www.gov.uk/state-pension-age/y/age/#{@birthday}/#{@gender || 'male'}.json").read
       year = JSON.parse(r)['title'].match(/\d\d\d\d/)[0]
@@ -107,8 +109,8 @@ class Session
 
       question = "Because you were born on #{@birthday} #{JSON.parse(r)['title']} and you will be #{age} years old"
       allowed_actions = %{pension_age}
-        #you can claim your pension on
-        #¢DD/MM/YYYY and you will be YY years old."
+      reset = true
+
     when :want_exact_date
       r = open("https://www.gov.uk/state-pension-age/y/age/#{@birthday}/#{@gender || 'male'}.json").read
       year = JSON.parse(r)['title'].match(/\d\d\d\d/)[0]
@@ -122,14 +124,16 @@ class Session
       raise "Missing action: #{@next_action || next_action}"
     end
 
-    args = {
-      session_attributes: {
+    args = {}
+
+    unless reset
+      args[:session_attributes] = {
         last_action: @next_action || next_action,
         last_request: question,
         allowed_actions: allowed_actions,
         birthday: @birthday,
       }
-    }
+    end
 
     args[:ssml] = true if ssml
     [question, args]
