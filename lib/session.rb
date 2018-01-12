@@ -106,8 +106,11 @@ class Session
         #you can claim your pension on
         #¢DD/MM/YYYY and you will be YY years old."
     when :want_exact_date
+      r = open("https://www.gov.uk/state-pension-age/y/age/#{@birthday}/#{@gender || 'male'}.json").read
+      year = JSON.parse(r)['title'].match(/\d\d\d\d/)[0]
+      age = year.to_i - @birthday.to_i
       question =  <<~MSG
-        Because you were born on #{@birthday} you can claim your pension on YYYY and you will be YY years old. 
+        Because you were born on #{@birthday} you can claim your pension on #{year} and you will be #{age} years old. 
         Would you like to know the exact date?
       MSG
       allowed_actions = %{YesIntent pension_age}
