@@ -1,0 +1,83 @@
+{
+  "languageModel": {
+    "types": [
+      {
+        "name": "CONFIRMATION",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "Yes",
+              "synonyms": [
+                "yep"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "No",
+              "synonyms": []
+            }
+          }
+        ]
+      }
+    ],
+    "intents": [
+      {
+        "name": "AMAZON.CancelIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.HelpIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.YesIntent",
+        "samples": []
+      },
+      {
+        "name": "getDate",
+        "samples": [
+          "{date}"
+        ],
+        "slots": [
+          {
+            "name": "date",
+            "type": "AMAZON.DATE"
+          }
+        ]
+      },
+      {
+        "name": "getNumber",
+        "samples": [
+          "{number}"
+        ],
+        "slots": [
+          {
+            "name": "number",
+            "type": "AMAZON.NUMBER"
+          }
+        ]
+      },
+      {
+        "name": "pension_age",
+        "samples": [
+          "I was born on {birthday} when can I get my pension",
+          "when can I get my pension"
+        ],
+        "slots": [
+          {
+            "name": "birthday",
+            "type": "AMAZON.DATE"
+          }
+        ]
+      }
+    ],
+    "invocationName": "government uk"
+  }
+}

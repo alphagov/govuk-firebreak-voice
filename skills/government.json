@@ -1,0 +1,238 @@
+{
+  "languageModel": {
+    "types": [
+      {
+        "name": "GENDERS",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "male",
+              "synonyms": [
+                "man"
+              ]
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "female",
+              "synonyms": [
+                "woman"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "QUESTION",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "retire",
+              "synonyms": []
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "start my pension",
+              "synonyms": []
+            }
+          }
+        ]
+      },
+      {
+        "name": "WEBSIT_ITEMS",
+        "values": [
+          {
+            "id": null,
+            "name": {
+              "value": "Universal credit",
+              "synonyms": []
+            }
+          },
+          {
+            "id": null,
+            "name": {
+              "value": "Income Tax",
+              "synonyms": []
+            }
+          }
+        ]
+      }
+    ],
+    "intents": [
+      {
+        "name": "AMAZON.CancelIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.HelpIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": []
+      },
+      {
+        "name": "list_commands",
+        "samples": [
+          "List commands",
+          "list options",
+          "options",
+          "commands"
+        ],
+        "slots": []
+      },
+      {
+        "name": "minister_for_cabinet_office",
+        "samples": [
+          "Who is the minister for Cabinet Office",
+          "Who's the MP for the Cabinet Office",
+          "Who is the new minister for the Cabinet Office",
+          "Who's the new minister for Cabinet Office"
+        ],
+        "slots": []
+      },
+      {
+        "name": "queens_birthday",
+        "samples": [
+          "When's the Queen's birthday this year",
+          "When's the Queen's official birthday this year",
+          "What date is the Queen's birthday",
+          "What date is the Queen's official birthday",
+          "When is the Queen of Britain's birthday",
+          "When is the Queen of Britain's official birthday",
+          "Queen's birthday",
+          "When's the Queen's birthday",
+          "When's the Queen's official birthday",
+          "When is the holiday for the Queen's birthday",
+          "I want to know the Queen's birthday",
+          "Tell me the Queen's birthday",
+          "When is the monarch's birthday",
+          "When is her majesty's birthday"
+        ],
+        "slots": []
+      },
+      {
+        "name": "simple_state_pension",
+        "samples": [
+          "State pension what I am {gender} born on {birthday}",
+          "state pension for {gender} born {birthday}",
+          "state pension for {gender}"
+        ],
+        "slots": [
+          {
+            "name": "birthday",
+            "type": "AMAZON.DATE",
+            "samples": [
+              "{birthday}"
+            ]
+          },
+          {
+            "name": "gender",
+            "type": "GENDERS",
+            "samples": [
+              "{gender}"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "website_item",
+        "samples": [
+          "How do you claim {websiteItem}",
+          "How can I claim {websiteItem}",
+          "Can I get {websiteItem}",
+          "Am I eligible for {websiteItem}",
+          "How can I get {websiteItem}",
+          "Who do I call about {websiteItem}",
+          "How do I find out about {websiteItem}",
+          "What's the helpline for {websiteItem}",
+          "What's the phone line for {websiteItem}",
+          "What is {websiteItem}",
+          "How much do I owe in {websiteItem}",
+          "How much is {websiteItem}"
+        ],
+        "slots": [
+          {
+            "name": "websiteItem",
+            "type": "WEBSIT_ITEMS"
+          }
+        ]
+      }
+    ],
+    "invocationName": "government"
+  },
+  "prompts": [
+    {
+      "id": "Elicit.Intent-simple_state_pension.IntentSlot-birthday",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "What is your date of birth?"
+        }
+      ]
+    },
+    {
+      "id": "Confirm.Intent-simple_state_pension.IntentSlot-birthday",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "your birthday is {birthday}"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-simple_state_pension.IntentSlot-gender",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "What is your gender?"
+        }
+      ]
+    },
+    {
+      "id": "Confirm.Intent-simple_state_pension.IntentSlot-gender",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "Your gender is {gender}"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "intents": [
+      {
+        "name": "simple_state_pension",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "birthday",
+            "type": "AMAZON.DATE",
+            "elicitationRequired": true,
+            "confirmationRequired": true,
+            "prompts": {
+              "elicitation": "Elicit.Intent-simple_state_pension.IntentSlot-birthday",
+              "confirmation": "Confirm.Intent-simple_state_pension.IntentSlot-birthday"
+            }
+          },
+          {
+            "name": "gender",
+            "type": "GENDERS",
+            "elicitationRequired": true,
+            "confirmationRequired": true,
+            "prompts": {
+              "elicitation": "Elicit.Intent-simple_state_pension.IntentSlot-gender",
+              "confirmation": "Confirm.Intent-simple_state_pension.IntentSlot-gender"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
